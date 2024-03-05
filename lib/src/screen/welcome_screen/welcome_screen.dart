@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:novel_app/src/screen/auth/login_screen.dart';
 import 'package:novel_app/src/screen/home_screen/home_screen.dart';
 import 'package:novel_app/src/utils/welcome_utils/welcome_utils.dart';
 
@@ -24,12 +25,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   void _incrementAssets() {
-    if (_index == 3) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+    if (_index == 2) {
+      Navigator.pushNamed(context, '/loginscreen');
+
       return;
     }
     setState(() {
@@ -41,7 +39,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Container(
         margin: const EdgeInsets.all(10),
         child: Column(
