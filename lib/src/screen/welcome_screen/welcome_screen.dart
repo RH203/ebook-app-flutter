@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:novel_app/src/screen/auth/login_screen.dart';
-import 'package:novel_app/src/screen/home_screen/home_screen.dart';
-import 'package:novel_app/src/utils/welcome_utils/welcome_utils.dart';
 
-import 'package:google_fonts/google_fonts.dart';
+import 'package:novel_app/src/utils/welcome_utils/welcome_utils.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -61,6 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 30,
                     ),
+                key: ValueKey<int>(_index),
               ),
             ),
             AnimatedSwitcher(
