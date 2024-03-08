@@ -1,80 +1,99 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:toggle_switch/toggle_switch.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:novel_app/src/common/active_button/buttons.dart';
+import 'package:novel_app/src/common/fields/text_input_fields.dart';
+import 'package:novel_app/src/utils/validator/validator.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("NarrativeNet"),
-        elevation: 0,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: const EdgeInsets.all(8),
+      body: Container(
+        color: const Color.fromARGB(255, 39, 115, 246),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DrawerHeader(
-              child: Image.asset(
-                'assets/image/drawer/narrativenet.png',
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 150),
+                child: Column(
+                  children: [
+                    Text(
+                      "SIGN IN",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 37,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      "Ready for another adventure?",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 20,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.person),
-                      title: const Text('Profile'),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.favorite),
-                      title: const Text('Favorite'),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.library_books),
-                      title: const Text('Books'),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.book),
-                      title: const Text('Genre'),
-                      onTap: () {},
-                    ),
-                  ],
+            Expanded(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
                 ),
-                ToggleSwitch(
-                  minWidth: 90.0,
-                  minHeight: 70.0,
-                  initialLabelIndex: 0,
-                  cornerRadius: 20.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
-                  totalSwitches: 2,
-                  icons: const [
-                    IconData(Icon(Icons.dark_mode)),
-                    Icon(Icons.light_mode),
-                  ],
-                  iconSize: 30.0,
-                  activeBgColors: const [
-                    [Colors.black45, Colors.black26],
-                    [Colors.yellow, Colors.orange]
-                  ],
-                  animate: true,
-                  curve: Curves.bounceInOut,
-                  onToggle: (index) {
-                    print('switched to: $index');
-                  },
+                child: Container(
+                  margin: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextInputFields(
+                        controller: emailController,
+                        hintText: "Email",
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Harap masukan email";
+                          }
+
+                          if (!Validator.emailIsValid(value)) {
+                            return "Email Tidak Valid";
+                          }
+
+                          return "null";
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      TextInputFields.password(
+                        controller: passwordController,
+                        hintText: "Password",
+                        keyboardType: TextInputType.visiblePassword,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Harap masukan password";
+                          }
+
+                          return "null";
+                        },
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: ActionButtons(
+                          text: "SIGN IN",
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            )
           ],
         ),
       ),
