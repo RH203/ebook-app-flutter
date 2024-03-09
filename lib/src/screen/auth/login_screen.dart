@@ -16,84 +16,118 @@ class LoginScreen extends StatelessWidget {
         color: const Color.fromARGB(255, 39, 115, 246),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 150),
-                child: Column(
-                  children: [
-                    Text(
-                      "SIGN IN",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontSize: 37,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Text(
-                      "Ready for another adventure?",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontSize: 20,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Column(
+                    children: [
+                      Text(
+                        "SIGN IN",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontSize: 37,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        "Ready for another adventure?",
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                              fontSize: 20,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
                   color: Colors.white,
                 ),
-                child: Container(
-                  margin: const EdgeInsets.all(20),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextInputFields(
-                        controller: emailController,
-                        hintText: "Email",
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Harap masukan email";
-                          }
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            width: 300,
+                            child: TextInputFields(
+                              controller: emailController,
+                              hintText: "Email",
+                              keyboardType: TextInputType.emailAddress,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter your email";
+                                }
 
-                          if (!Validator.emailIsValid(value)) {
-                            return "Email Tidak Valid";
-                          }
+                                if (!Validator.emailIsValid(value)) {
+                                  return "Invalid Email";
+                                }
 
-                          return "null";
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      TextInputFields.password(
-                        controller: passwordController,
-                        hintText: "Password",
-                        keyboardType: TextInputType.visiblePassword,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Harap masukan password";
-                          }
+                                return "null";
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          SizedBox(
+                            width: 300,
+                            child: TextInputFields.password(
+                              controller: passwordController,
+                              hintText: "Password",
+                              keyboardType: TextInputType.visiblePassword,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter your password";
+                                }
 
-                          return "null";
-                        },
+                                return "null";
+                              },
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Don't have an account yet? "),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/signupscreen');
+                                },
+                                child: const Text("Sign up"),
+                              ),
+                              const Text("now")
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
                         width: 200,
                         child: ActionButtons(
                           text: "SIGN IN",
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/mainscreen');
+                          },
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
