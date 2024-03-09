@@ -8,11 +8,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isDark = false;
+
+  void _isDarkChange() {
+    setState(() {
+      isDark = !isDark;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("NarrativeNet"),
+        title: const Text("Narrative"),
+        actions: [
+          IconButton(
+            onPressed: _isDarkChange,
+            icon: !isDark
+                ? const Icon(Icons.dark_mode)
+                : const Icon(Icons.light_mode),
+          ),
+        ],
         elevation: 0,
       ),
       drawer: Drawer(
