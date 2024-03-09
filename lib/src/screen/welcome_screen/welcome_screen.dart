@@ -69,6 +69,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   width: 200,
                   height: 7,
                   color: Theme.of(context).colorScheme.primary,
+                  key: ValueKey<int>(_index),
                 ),
               ),
             ),
@@ -80,6 +81,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       color: Theme.of(context).colorScheme.secondary,
                       fontSize: 17,
                     ),
+                key: ValueKey<int>(_index),
               ),
             ),
             Row(
