@@ -35,11 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           padding: const EdgeInsets.all(8),
           children: [
-            DrawerHeader(
-              child: Image.asset(
-                'assets/image/drawer/narrativenet.png',
-              ),
-            ),
+            const DrawerHeader(
+                child: Column(
+              children: [
+                Text("Narrative"),
+                Text("lorem ipsum dolor sit amet"),
+              ],
+            )),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -48,7 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ListTile(
                       leading: const Icon(Icons.person),
                       title: const Text('Profile'),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/profilscreen');
+                      },
                     ),
                     ListTile(
                       leading: const Icon(Icons.favorite),
