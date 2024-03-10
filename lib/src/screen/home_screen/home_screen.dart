@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:novel_app/src/provider/theme/provider_theme.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,11 +10,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isDark = false;
-
-  void _isDarkChange() {
+  void _isChangeTheme() {
     setState(() {
-      isDark = !isDark;
+      Provider.of<ProviderTheme>(context, listen: false).toggleTheme();
     });
   }
 
@@ -20,13 +20,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Narrative"),
         actions: [
-          IconButton(
-            onPressed: _isDarkChange,
-            icon: !isDark
-                ? const Icon(Icons.dark_mode)
-                : const Icon(Icons.light_mode),
+          Consumer<ProviderTheme>(
+            builder: (context, value, child) => IconButton(
+              onPressed: _isChangeTheme,
+              icon: value.darkTheme
+                  ? const Icon(Icons.light_mode)
+                  : const Icon(Icons.dark_mode),
+            ),
           ),
         ],
         elevation: 0,
