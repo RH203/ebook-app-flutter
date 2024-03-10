@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:novel_app/src/common/active_button/buttons.dart';
 import 'package:novel_app/src/common/fields/text_input_fields.dart';
 import 'package:novel_app/src/utils/validator/validator.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -10,146 +10,159 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
+    final TextEditingController nameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confirmPasswordController =
-        TextEditingController();
 
     return Scaffold(
-      body: Container(
-        color: const Color.fromARGB(255, 39, 115, 246),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 1,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 100),
-                  child: Column(
-                    children: [
-                      Text(
-                        "SIGN UP",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontSize: 37,
-                            ),
-                        textAlign: TextAlign.center,
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: Text(
+                  "Sign Up",
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 35,
                       ),
-                      Text(
-                        "Start your reading journey with Narrative.",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontSize: 20,
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  color: Colors.white,
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                width: 300,
+                child: Text(
+                  "Fill your information below or register with your social account",
+                  textAlign: TextAlign.center,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            width: 300,
-                            child: TextInputFields(
-                              controller: emailController,
-                              hintText: "Email",
-                              keyboardType: TextInputType.emailAddress,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Please enter your email";
-                                }
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 60),
+                width: 350,
+                child: TextInputFields(
+                  controller: nameController,
+                  hintText: "Username",
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your username";
+                    }
 
-                                if (!Validator.emailIsValid(value)) {
-                                  return "Invalid Email";
-                                }
+                    if (!Validator.usernameIsValid(value)) {
+                      return "Invalid username";
+                    }
 
-                                return "null";
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 300,
-                            child: TextInputFields.password(
-                              controller: passwordController,
-                              hintText: "Password",
-                              keyboardType: TextInputType.visiblePassword,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Please enter your password";
-                                }
+                    return "null";
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                width: 350,
+                child: TextInputFields(
+                  controller: emailController,
+                  hintText: "Email",
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your email";
+                    }
 
-                                return "null";
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            width: 300,
-                            child: TextInputFields.password(
-                              controller: confirmPasswordController,
-                              hintText: "Password",
-                              keyboardType: TextInputType.visiblePassword,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Please enter your password";
-                                }
+                    if (!Validator.emailIsValid(value)) {
+                      return "Invalid Email";
+                    }
 
-                                return "null";
-                              },
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Already have account?"),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/loginscreen');
-                                },
-                                child: const Text("Sign In"),
-                              ),
-                              const Text("now")
-                            ],
-                          ),
-                        ],
+                    return "null";
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                width: 350,
+                child: TextInputFields.password(
+                  controller: passwordController,
+                  hintText: "Password",
+                  keyboardType: TextInputType.text,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your password";
+                    }
+
+                    if (!Validator.passwordIsValid(value)) {
+                      return "Invalid Password";
+                    }
+
+                    return "null";
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 45),
+                width: 350,
+                child: ActionButtons(
+                  onPressed: () => Navigator.pushNamed(context, '/mainscreen'),
+                  text: "Submit",
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 40),
+                child: const Text(
+                  "Or sign in with",
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        AntDesign.google_circle_fill,
+                        size: 40,
                       ),
-                      SizedBox(
-                        width: 200,
-                        child: ActionButtons(
-                          text: "SIGN IN",
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/mainscreen');
-                          },
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        AntDesign.facebook_fill,
+                        size: 40,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        AntDesign.apple_fill,
+                        size: 40,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Already have an account?"),
+                      TextButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/signupscreen'),
+                        child: Text(
+                          "Sign In",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
-                      ),
+                      )
                     ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+                  ))
+            ],
+          ),
         ),
       ),
     );
