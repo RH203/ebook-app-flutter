@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:novel_app/src/provider/theme/provider_theme.dart';
 
 import 'package:novel_app/src/utils/welcome_utils/welcome_utils.dart';
 
@@ -11,6 +12,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   WelcomeUtils homescreen = WelcomeUtils();
+  ProviderTheme _providerTheme = ProviderTheme();
   late List<String> data;
   int _index = 0;
 
@@ -19,6 +21,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     // TODO: implement initState
     super.initState();
     data = homescreen.dataScreen(_index);
+    getCurrentThemeApp();
+  }
+
+  void getCurrentThemeApp() async {
+    _providerTheme.setDarkTheme();
+    await _providerTheme.themePreferences.getTheme();
   }
 
   void _incrementAssets() {
@@ -55,9 +63,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Text(
                 data[1],
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 30,
                     ),
+                textAlign: TextAlign.center,
                 key: ValueKey<int>(_index),
               ),
             ),
@@ -68,7 +76,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: Container(
                   width: 200,
                   height: 7,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.onSurface,
                   key: ValueKey<int>(_index),
                 ),
               ),
@@ -78,9 +86,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Text(
                 data[2],
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
                       fontSize: 17,
                     ),
+                textAlign: TextAlign.center,
                 key: ValueKey<int>(_index),
               ),
             ),
@@ -90,8 +98,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
                   child: TextButton(
-                    onPressed: () {},
-                    child: const Text("Skip"),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/loginscreen');
+                    },
+                    child: Text(
+                      "Skip",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface),
+                    ),
                   ),
                 ),
                 AnimatedSwitcher(
