@@ -1,8 +1,8 @@
 class WelcomeUtils {
   final imageWelcome = [
-    "assets/image/homescreen/women-smartphone.jpg",
-    "assets/image/homescreen/man-smartphone.jpg",
-    "assets/image/homescreen/women-smartphone-2.jpg",
+    "assets/image/homescreen/women-smartphone.png",
+    "assets/image/homescreen/man-smartphone.png",
+    "assets/image/homescreen/women-smartphone-2.png",
   ];
 
   final titleWelcome = [
