@@ -7,7 +7,11 @@ class Validator {
     return validEmail.hasMatch(email);
   }
 
-  static bool passwordIsValid (String password) {
+  static bool passwordIsValid(String password) {
     return must8.hasMatch(password);
+  }
+
+  static bool usernameIsValid(String username) {
+    return username.length > 5;
   }
 }
