@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:novel_app/src/screen/auth/login_screen.dart';
 import 'package:novel_app/src/screen/auth/signup_screen.dart';
 import 'package:novel_app/src/screen/home_screen/home_screen.dart';
+import 'package:novel_app/src/screen/profile/profile_screen.dart';
 import 'package:novel_app/src/screen/welcome_screen/welcome_screen.dart';
 
 class App extends StatelessWidget {
@@ -41,6 +42,7 @@ class App extends StatelessWidget {
         '/loginscreen': (context) => const LoginScreen(),
         '/signupscreen': (context) => const SignupScreen(),
         '/mainscreen': (context) => const HomeScreen(),
+        '/profilscreen': (context) => const ProfileScreen(),
       },
       home: const WelcomeScreen(),
       debugShowCheckedModeBanner: false,
