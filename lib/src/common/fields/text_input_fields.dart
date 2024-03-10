@@ -46,14 +46,17 @@ class _TextInputFieldsState extends State<TextInputFields> {
                 onTap: onToggleVisibility,
                 child: Icon(
                   isVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.background,
                 ),
               )
             : null,
         hintText: widget.hintText,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+            width: 2,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -78,7 +81,7 @@ class _TextInputFieldsState extends State<TextInputFields> {
         ),
         filled: true,
         fillColor:
-            Theme.of(context).colorScheme.inversePrimary.withOpacity(0.4),
+            Theme.of(context).colorScheme.inversePrimary.withOpacity(0.3),
         contentPadding: const EdgeInsets.all(16),
       ),
       obscureText: widget.isPassword && !isVisible,
