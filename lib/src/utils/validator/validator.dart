@@ -14,4 +14,8 @@ class Validator {
   static bool usernameIsValid(String username) {
     return username.length > 5;
   }
+
+  static bool searchIsValid(String search) {
+    return search.length > 3;
+  }
 }
