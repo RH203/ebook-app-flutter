@@ -56,13 +56,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, '/mainscreen'),
+                    onTap: () => Navigator.pushNamed(context, '/loginscreen'),
                     child: const Text("Skip"),
                   ),
                   SmoothPageIndicator(
                     controller: _controller,
                     count: 3,
-                    effect: ScrollingDotsEffect(
+                    effect: WormEffect(
                       dotWidth: 20,
                       activeDotColor:
                           Theme.of(context).colorScheme.surfaceVariant,
@@ -71,7 +71,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   _onLastPage
                       ? GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/mainscreen');
+                            Navigator.pushNamed(context, '/loginscreen');
                           },
                           child: const Text("Done"),
                         )
