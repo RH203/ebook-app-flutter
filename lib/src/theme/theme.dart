@@ -40,8 +40,9 @@ class CustomTheme {
         background:
             isDarkTheme ? const Color(0xFF1C1B1F) : const Color(0xFF45158A),
         onBackground: isDarkTheme ? Colors.black : Colors.white,
-        surface:
-            isDarkTheme ? const Color(0xFF1C1B1F) : const Color(0xFF45158A),
+        surface: isDarkTheme
+            ? const Color(0xFF1C1B1F)
+            : Color.fromARGB(255, 121, 87, 169),
         onSurface:
             isDarkTheme ? const Color(0xFFE6E1E5) : const Color(0xFFE6E1E5),
         surfaceVariant:
