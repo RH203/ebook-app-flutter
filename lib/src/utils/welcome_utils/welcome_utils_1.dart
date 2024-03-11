@@ -14,7 +14,7 @@ class WelcomeUtils1 extends StatelessWidget {
           ),
         ),
         Text(
-          "Explore Vast Narratives: NarrativeNet",
+          "Discover millions of your favorite novel in one app.",
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 fontSize: 30,
               ),

@@ -8,13 +8,13 @@ class WelcomeUtils3 extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.only(top: 60, bottom: 120),
+          padding: const EdgeInsets.only(top: 40, bottom: 120),
           child: Image.asset(
             "assets/image/homescreen/women-smartphone-2.png",
           ),
         ),
         Text(
-          "Immerse Yourself in Infinite Adventures: NarrativeNet",
+          "Start your journey into the world of stories now!",
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 fontSize: 30,
               ),
