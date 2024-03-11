@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:novel_app/src/provider/theme/provider_theme.dart';
+import 'package:novel_app/src/utils/welcome_utils/welcome_utils_1.dart';
+import 'package:novel_app/src/utils/welcome_utils/welcome_utils_2.dart';
+import 'package:novel_app/src/utils/welcome_utils/welcome_utils_3.dart';
 
-import 'package:novel_app/src/utils/welcome_utils/welcome_utils.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -11,16 +14,14 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  WelcomeUtils homescreen = WelcomeUtils();
   ProviderTheme _providerTheme = ProviderTheme();
-  late List<String> data;
-  int _index = 0;
+  PageController _controller = PageController();
+  bool _onLastPage = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    data = homescreen.dataScreen(_index);
     getCurrentThemeApp();
   }
 
@@ -29,92 +30,62 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     await _providerTheme.themePreferences.getTheme();
   }
 
-  void _incrementAssets() {
-    if (_index == 2) {
-      Navigator.pushNamed(context, '/loginscreen');
-
-      return;
-    }
-    setState(() {
-      _index++;
-      data = homescreen.dataScreen(_index);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        margin: const EdgeInsets.only(top: 5, left: 5, right: 5),
+        child: Stack(
           children: [
-            AnimatedSwitcher(
-              duration: const Duration(seconds: 1),
-              child: Image.asset(
-                data[0],
-                key: ValueKey<int>(_index),
-                width: 380,
-              ),
+            PageView(
+              controller: _controller,
+              onPageChanged: (value) {
+                setState(() {
+                  _onLastPage = (value == 2);
+                });
+              },
+              children: const [
+                WelcomeUtils1(),
+                WelcomeUtils2(),
+                WelcomeUtils3(),
+              ],
             ),
-            AnimatedSwitcher(
-              duration: const Duration(seconds: 1),
-              child: Text(
-                data[1],
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontSize: 30,
-                    ),
-                textAlign: TextAlign.center,
-                key: ValueKey<int>(_index),
-              ),
-            ),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  width: 200,
-                  height: 7,
-                  color: Theme.of(context).colorScheme.onSurface,
-                  key: ValueKey<int>(_index),
-                ),
-              ),
-            ),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              child: Text(
-                data[2],
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      fontSize: 17,
-                    ),
-                textAlign: TextAlign.center,
-                key: ValueKey<int>(_index),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/loginscreen');
-                    },
-                    child: Text(
-                      "Skip",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface),
+            Container(
+              alignment: const Alignment(0, 0.8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/mainscreen'),
+                    child: const Text("Skip"),
+                  ),
+                  SmoothPageIndicator(
+                    controller: _controller,
+                    count: 3,
+                    effect: ScrollingDotsEffect(
+                      dotWidth: 20,
+                      activeDotColor:
+                          Theme.of(context).colorScheme.surfaceVariant,
                     ),
                   ),
-                ),
-                AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    child: IconButton.filled(
-                      onPressed: _incrementAssets,
-                      icon: const Icon(Icons.keyboard_double_arrow_right_sharp),
-                    )),
-              ],
+                  _onLastPage
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/mainscreen');
+                          },
+                          child: const Text("Done"),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            _controller.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeIn,
+                            );
+                          },
+                          child: const Text("Next"),
+                        ),
+                ],
+              ),
             )
           ],
         ),
