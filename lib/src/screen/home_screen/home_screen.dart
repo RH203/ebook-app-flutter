@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:novel_app/src/common/card/custom_card.dart';
 import 'package:novel_app/src/provider/theme/provider_theme.dart';
 import 'package:novel_app/src/utils/button/genre_utils.dart';
 import 'package:provider/provider.dart';
@@ -40,14 +41,96 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
         ),
         drawer: _Drawer(),
-        body: Column(
-          children: [
-            _CarouselImage(),
-            _SearchBarCustom(searchController: searchController),
-            _GenreTextBody(),
-            _ButtonGenreCustom(genreUtils: _genreUtils),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _CarouselImage(),
+              _SearchBarCustom(searchController: searchController),
+              _GenreTextBody(),
+              _ButtonGenreCustom(genreUtils: _genreUtils),
+              _onGoingCardCustom(),
+              _popularCardCustom(),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _popularCardCustom extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 270,
+      margin: const EdgeInsets.only(left: 8, right: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Populer",
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontSize: 30,
+                ),
+          ),
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _onGoingCardCustom extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 270,
+      margin: const EdgeInsets.only(top: 20, left: 8, right: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Ongoing",
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontSize: 30,
+                ),
+          ),
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+                CustomCard(),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -83,7 +166,7 @@ class _ButtonGenreCustom extends StatelessWidget {
                       onPressed: () {},
                       child: Text(
                         genre,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   );
@@ -102,7 +185,7 @@ class _GenreTextBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(left: 15),
+      margin: const EdgeInsets.only(left: 8),
       padding: const EdgeInsets.only(top: 30),
       child: Text(
         "Genre",
@@ -239,24 +322,23 @@ class _Drawer extends StatelessWidget {
                   ListTile(
                     leading: const Icon(Icons.person),
                     title: const Text('Profile'),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/profilscreen');
-                    },
+                    onTap: () => Navigator.pushNamed(context, '/profilscreen'),
                   ),
                   ListTile(
                     leading: const Icon(Icons.favorite),
                     title: const Text('Favorite'),
-                    onTap: () {},
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/favoritescreen'),
                   ),
                   ListTile(
                     leading: const Icon(Icons.library_books),
                     title: const Text('Books'),
-                    onTap: () {},
+                    onTap: () => Navigator.pushNamed(context, '/booksscreen'),
                   ),
                   ListTile(
                     leading: const Icon(Icons.book),
                     title: const Text('Genre'),
-                    onTap: () {},
+                    onTap: () => Navigator.pushNamed(context, '/genrescreen'),
                   ),
                 ],
               ),
