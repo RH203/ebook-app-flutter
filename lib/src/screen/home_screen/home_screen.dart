@@ -53,6 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton.large(
+          onPressed: () => Navigator.pushNamed(context, '/messagescreen'),
+          child: const Icon(Icons.message),
+        ),
       ),
     );
   }
@@ -291,7 +295,7 @@ class _CarouselImage extends StatelessWidget {
         height: 150,
         reverse: true,
         autoPlay: true,
-        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayInterval: const Duration(seconds: 2),
         autoPlayAnimationDuration: const Duration(milliseconds: 500),
         autoPlayCurve: Curves.fastOutSlowIn,
         scrollDirection: Axis.horizontal,
