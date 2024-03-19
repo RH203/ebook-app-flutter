@@ -16,4 +16,6 @@ class ProviderTheme extends ChangeNotifier {
     themePreferences.setDarkTheme(_darkTheme);
     notifyListeners();
   }
+
+  
 }
