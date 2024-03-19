@@ -6,16 +6,20 @@ class CustomTheme {
       useMaterial3: true,
       colorScheme: ColorScheme(
         brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-        primary:
-            isDarkTheme ? const Color(0xFFD0BCFF) : const Color(0xFF6750A4),
+        primary: isDarkTheme
+            ? const Color.fromARGB(255, 122, 122, 122)
+            : Colors.grey.shade500,
         onPrimary:
             isDarkTheme ? const Color(0xFF381E72) : const Color(0xFFFFFFFF),
         primaryContainer:
             isDarkTheme ? const Color(0xFF4F378B) : const Color(0xFFEADDFF),
         onPrimaryContainer:
             isDarkTheme ? const Color(0xFFEADDFF) : const Color(0xFF21005D),
-        secondary:
-            isDarkTheme ? const Color(0xFFCCC2DC) : const Color(0xFF625B71),
+        inversePrimary:
+            isDarkTheme ? Colors.grey.shade300 : Colors.grey.shade700,
+        secondary: isDarkTheme
+            ? const Color.fromRGBO(255, 30, 30, 30)
+            : Colors.grey.shade100,
         onSecondary:
             isDarkTheme ? const Color(0xFF332D41) : const Color(0xFFFFFFFF),
         secondaryContainer:
@@ -23,7 +27,7 @@ class CustomTheme {
         onSecondaryContainer:
             isDarkTheme ? const Color(0xFFE8DEF8) : const Color(0xFF1D192B),
         tertiary:
-            isDarkTheme ? const Color(0xFFEFB8C8) : const Color(0xFF7D5260),
+            isDarkTheme ? const Color.fromRGBO(255, 47, 47, 47) : Colors.white,
         onTertiary:
             isDarkTheme ? const Color(0xFF492532) : const Color(0xFFFFFFFF),
         tertiaryContainer:
@@ -37,14 +41,12 @@ class CustomTheme {
             isDarkTheme ? const Color(0xFF8C1D18) : const Color(0xFFF9DEDC),
         onErrorContainer:
             isDarkTheme ? const Color(0xFFF9DEDC) : const Color(0xFF410E0B),
-        background:
-            isDarkTheme ? const Color(0xFF1C1B1F) : const Color(0xFF45158A),
+        background: isDarkTheme ? Colors.grey.shade700 : Colors.grey.shade300,
         onBackground: isDarkTheme ? Colors.black : Colors.white,
         surface: isDarkTheme
             ? const Color(0xFF1C1B1F)
-            : Color.fromARGB(255, 121, 87, 169),
-        onSurface:
-            isDarkTheme ? const Color(0xFFE6E1E5) : const Color(0xFFE6E1E5),
+            : const Color.fromARGB(255, 121, 87, 169),
+        onSurface: isDarkTheme ? const Color(0xFFE6E1E5) : Colors.black,
         surfaceVariant:
             isDarkTheme ? const Color(0xFF49454F) : const Color(0xFFE7E0EC),
         onSurfaceVariant:
