@@ -64,8 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     count: 3,
                     effect: WormEffect(
                       dotWidth: 20,
-                      activeDotColor:
-                          Theme.of(context).colorScheme.surfaceVariant,
+                      activeDotColor: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   _onLastPage
