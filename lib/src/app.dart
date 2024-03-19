@@ -8,6 +8,7 @@ import 'package:novel_app/src/screen/genre_screen/genre_screen.dart';
 import 'package:novel_app/src/screen/home_screen/home_screen.dart';
 import 'package:novel_app/src/screen/message_screen/message_screen.dart';
 import 'package:novel_app/src/screen/profile/profile_screen.dart';
+import 'package:novel_app/src/screen/search_screen/search_screen.dart';
 import 'package:novel_app/src/screen/welcome_screen/welcome_screen.dart';
 import 'package:novel_app/src/theme/theme.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class App extends StatelessWidget {
           '/booksscreen': (context) => const ListBookScreen(),
           '/genrescreen': (context) => const GenreScreen(),
           '/messagescreen': (context) => const MessageScreen(),
+          '/searchscreen': (context) => const SearchScreen(),
         },
         home: const WelcomeScreen(),
         debugShowCheckedModeBanner: false,
