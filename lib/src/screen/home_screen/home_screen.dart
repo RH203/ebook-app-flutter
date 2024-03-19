@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:novel_app/src/common/card/custom_card.dart';
 import 'package:novel_app/src/provider/theme/provider_theme.dart';
 import 'package:novel_app/src/utils/button/genre_utils.dart';
@@ -13,56 +14,119 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _currentPageIndex = 0;
   GenreUtils _genreUtils = GenreUtils();
-  void _isChangeTheme() {
+
+  void isChangeTheme() {
     setState(() {
       Provider.of<ProviderTheme>(context, listen: false).toggleTheme();
     });
   }
 
+  final List<String> pages = [
+    '/mainscreen',
+    '/profilscreen',
+    '/favoritescreen',
+    '/booksscreen',
+    '/genrescreen'
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController searchController = TextEditingController();
     return Consumer<ProviderTheme>(
       builder: (context, value, child) => Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: value.darkTheme
-              ? const Color(0xFF1C1B1F)
-              : const Color(0xFF45158A),
+          backgroundColor: Theme.of(context).colorScheme.background,
           actions: [
             IconButton(
-              onPressed: _isChangeTheme,
+              onPressed: () => Navigator.pushNamed(context, '/searchscreen'),
+              icon: Icon(
+                IonIcons.search,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            IconButton(
+              onPressed: isChangeTheme,
               icon: value.darkTheme
-                  ? const Icon(Icons.light_mode)
-                  : const Icon(Icons.dark_mode),
+                  ? const Icon(
+                      Icons.light_mode,
+                    )
+                  : Icon(
+                      Icons.dark_mode,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
             ),
           ],
           elevation: 0,
         ),
-        drawer: _Drawer(),
         body: SingleChildScrollView(
           child: Column(
             children: [
               _CarouselImage(),
-              _SearchBarCustom(searchController: searchController),
               _GenreTextBody(),
               _ButtonGenreCustom(genreUtils: _genreUtils),
-              _onGoingCardCustom(),
-              _popularCardCustom(),
+              _OnGoingCardCustom(),
+              _PopularCardCustom(),
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton.large(
-          onPressed: () => Navigator.pushNamed(context, '/messagescreen'),
-          child: const Icon(Icons.message),
+        floatingActionButton: _FloatingActionButtonCustom(),
+        bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+          selectedItemColor: Theme.of(context).colorScheme.onSurface,
+          items: const [
+            BottomNavigationBarItem(
+              label: "Home",
+              icon: Icon(Icons.home),
+            ),
+            BottomNavigationBarItem(
+              label: "Person",
+              icon: Icon(Icons.person),
+            ),
+            BottomNavigationBarItem(
+              label: "Favorite",
+              icon: Icon(Icons.favorite_outlined),
+            ),
+            BottomNavigationBarItem(
+              label: "Books",
+              icon: Icon(Icons.book),
+            ),
+            BottomNavigationBarItem(
+              label: "Genre",
+              icon: Icon(Icons.bookmark),
+            ),
+          ],
+          currentIndex: _currentPageIndex,
+          onTap: (value) => setState(
+            () {
+              Navigator.popAndPushNamed(context, pages[value]);
+            },
+          ),
         ),
       ),
     );
   }
 }
 
-class _popularCardCustom extends StatelessWidget {
+class _FloatingActionButtonCustom extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      onPressed: () => Navigator.pushNamed(context, '/messagescreen'),
+      child: Icon(
+        Icons.message,
+        size: 30,
+        color: Theme.of(context).colorScheme.onSurface,
+      ),
+    );
+  }
+}
+
+class _PopularCardCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,7 +165,7 @@ class _popularCardCustom extends StatelessWidget {
   }
 }
 
-class _onGoingCardCustom extends StatelessWidget {
+class _OnGoingCardCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -201,67 +265,6 @@ class _GenreTextBody extends StatelessWidget {
   }
 }
 
-class _SearchBarCustom extends StatelessWidget {
-  const _SearchBarCustom({
-    required this.searchController,
-  });
-
-  final TextEditingController searchController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 15),
-      width: 320,
-      child: TextFormField(
-        controller: searchController,
-        decoration: InputDecoration(
-          suffixIcon: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-          ),
-          hintText: "Search",
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.onPrimary,
-              width: 2,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.primary,
-              width: 2,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.error,
-              width: 2,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.error,
-              width: 2,
-            ),
-          ),
-          filled: true,
-          fillColor:
-              Theme.of(context).colorScheme.inversePrimary.withOpacity(0.3),
-          contentPadding: const EdgeInsets.all(15),
-        ),
-      ),
-    );
-  }
-}
-
 class _CarouselImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -269,21 +272,17 @@ class _CarouselImage extends StatelessWidget {
       items: [1, 2, 3, 4, 5].map((i) {
         return Builder(
           builder: (BuildContext context) {
-            return Consumer<ProviderTheme>(
-              builder: (context, value, child) => Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: value.darkTheme
-                      ? const Color.fromARGB(255, 70, 69, 70)
-                      : const Color.fromARGB(255, 88, 37, 161),
-                ),
-                child: Center(
-                  child: Text(
-                    'Image novel app $i',
-                    style: const TextStyle(fontSize: 16.0),
-                  ),
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Theme.of(context).colorScheme.surface,
+              ),
+              child: Center(
+                child: Text(
+                  'Image novel app $i',
+                  style: const TextStyle(fontSize: 16.0),
                 ),
               ),
             );
@@ -299,56 +298,6 @@ class _CarouselImage extends StatelessWidget {
         autoPlayAnimationDuration: const Duration(milliseconds: 500),
         autoPlayCurve: Curves.fastOutSlowIn,
         scrollDirection: Axis.horizontal,
-      ),
-    );
-  }
-}
-
-class _Drawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: const EdgeInsets.all(8),
-        children: [
-          const DrawerHeader(
-              child: Column(
-            children: [
-              Text("Narrative"),
-              Text("lorem ipsum dolor sit amet"),
-            ],
-          )),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.person),
-                    title: const Text('Profile'),
-                    onTap: () => Navigator.pushNamed(context, '/profilscreen'),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.favorite),
-                    title: const Text('Favorite'),
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/favoritescreen'),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.library_books),
-                    title: const Text('Books'),
-                    onTap: () => Navigator.pushNamed(context, '/booksscreen'),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.book),
-                    title: const Text('Genre'),
-                    onTap: () => Navigator.pushNamed(context, '/genrescreen'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
