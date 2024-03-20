@@ -25,7 +25,7 @@ class ActionButtons extends StatelessWidget {
             isText ? Colors.transparent : Theme.of(context).colorScheme.primary,
         foregroundColor: isText
             ? Theme.of(context).colorScheme.onSurface
-            : Theme.of(context).colorScheme.onPrimary,
+            : Theme.of(context).colorScheme.onSurface,
         textStyle: Theme.of(context).textTheme.labelLarge,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
