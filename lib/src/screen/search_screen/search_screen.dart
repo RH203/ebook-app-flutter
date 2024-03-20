@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'dart:math';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:novel_app/src/utils/button/genre_utils.dart';
+import 'package:novel_app/src/utils/length_letter_and_sentence/check_length.dart';
 import 'package:novel_app/src/utils/validator/validator.dart';
 import 'package:provider/provider.dart';
 import 'package:novel_app/src/provider/theme/provider_theme.dart';
@@ -15,6 +16,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   GenreUtils _genreUtils = GenreUtils();
+  var randomIndex = Random();
   void isChangeTheme() {
     setState(() {
       Provider.of<ProviderTheme>(context, listen: false).toggleTheme();
@@ -26,6 +28,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final TextEditingController searchController = TextEditingController();
     return Consumer<ProviderTheme>(
       builder: (context, value, child) => Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(OctIcons.arrow_left),
@@ -46,34 +49,53 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
         body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(8),
             child: Column(
               children: [
                 _SearchBarCustom(searchController: searchController),
                 _TextTopSearch(),
-                GridView(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(8),
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 150,
-                    childAspectRatio: 2 / 2,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                  ),
-                  children: _genreUtils.genreTitle
-                      .map(
-                        (e) => ElevatedButton(
-                          onPressed: () {},
-                          child: Center(
-                            child: Text(e),
-                          ),
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            for (var i = 0;
+                                i < _genreUtils.genreTitle.length;
+                                i++)
+                              Container(
+                                width: 150,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 3),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(),
+                                  onPressed: () {},
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Text(
+                                      _genreUtils
+                                          .genreTitle[randomIndex.nextInt(30)],
+                                      style:
+                                          CheckLength.checkLengthLetterAndColor(
+                                              _genreUtils.genreTitle[
+                                                  randomIndex.nextInt(30)],
+                                              context),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                      )
-                      .toList(),
-                ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -89,7 +111,7 @@ class _TextTopSearch extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: const Text(
-        "Search by genre.",
+        "Search by genre",
         style: TextStyle(fontSize: 25),
       ),
     );
