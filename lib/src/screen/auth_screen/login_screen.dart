@@ -106,23 +106,26 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(
+                      icon: Icon(
                         AntDesign.google_circle_fill,
                         size: 40,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(
+                      icon: Icon(
                         AntDesign.facebook_fill,
                         size: 40,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(
+                      icon: Icon(
                         AntDesign.apple_fill,
                         size: 40,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
