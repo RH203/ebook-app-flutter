@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class CustomCard extends StatefulWidget {
@@ -12,54 +15,88 @@ class _CustomCardState extends State<CustomCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 105,
-      height: 200,
-      margin: const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      width: 120,
+      height: 245,
+      margin: const EdgeInsets.all(5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            "assets/image/mainscreen/sample-image.jpeg",
-            width: 100,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Stack(
             children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.remove_red_eye_outlined,
-                    size: 17,
-                  ),
-                  Text(
-                    "12.0K",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 12,
-                        ),
-                  )
-                ],
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  "assets/image/mainscreen/sample-image.jpeg",
+                  width: 120,
+                ),
               ),
-              Row(
-                children: [
-                  const Icon(
-                    AntDesign.fire_outline,
-                    size: 17,
-                  ),
-                  Text(
-                    "Rame",
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 12,
+              Container(
+                alignment: Alignment.bottomCenter,
+                padding: const EdgeInsets.all(2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      color: Theme.of(context).colorScheme.surface,
+                      child: Visibility(
+                        visible: true,
+                        child: Icon(
+                          Icons.fiber_new_outlined,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
-                  )
-                ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            AntDesign.fire_outline,
+                            size: 17,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          Text(
+                            "Rame",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                  fontSize: 12,
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.only(left: 2),
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Icon(
+                  Icons.remove_red_eye_outlined,
+                  size: 17,
+                ),
+                Text(
+                  "12.0K",
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 12,
+                      ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Text(
               "Title",
@@ -68,7 +105,7 @@ class _CustomCardState extends State<CustomCard> {
                   ),
               textAlign: TextAlign.start,
             ),
-          )
+          ),
         ],
       ),
     );
