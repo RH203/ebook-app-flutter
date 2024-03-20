@@ -46,7 +46,7 @@ class _TextInputFieldsState extends State<TextInputFields> {
                 onTap: onToggleVisibility,
                 child: Icon(
                   isVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Theme.of(context).colorScheme.background,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               )
             : null,
@@ -54,14 +54,14 @@ class _TextInputFieldsState extends State<TextInputFields> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.surface,
+            color: Theme.of(context).colorScheme.onSurface,
             width: 2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: Theme.of(context).colorScheme.onSurface,
             width: 2,
           ),
         ),
