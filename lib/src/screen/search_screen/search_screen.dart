@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:novel_app/src/utils/button/genre_utils.dart';
 import 'package:novel_app/src/utils/validator/validator.dart';
 import 'package:provider/provider.dart';
 import 'package:novel_app/src/provider/theme/provider_theme.dart';
@@ -12,6 +14,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  GenreUtils _genreUtils = GenreUtils();
   void isChangeTheme() {
     setState(() {
       Provider.of<ProviderTheme>(context, listen: false).toggleTheme();
@@ -42,25 +45,37 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ],
         ),
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          margin: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              _SearchBarCustom(searchController: searchController),
-              _TextTopSearch(),
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSurface,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(20),
+        body: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            margin: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                _SearchBarCustom(searchController: searchController),
+                _TextTopSearch(),
+                GridView(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(8),
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 150,
+                    childAspectRatio: 2 / 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
                   ),
+                  children: _genreUtils.genreTitle
+                      .map(
+                        (e) => ElevatedButton(
+                          onPressed: () {},
+                          child: Center(
+                            child: Text(e),
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -74,7 +89,7 @@ class _TextTopSearch extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: const Text(
-        "Top search",
+        "Search by genre.",
         style: TextStyle(fontSize: 25),
       ),
     );
