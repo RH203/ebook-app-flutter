@@ -1,10 +1,13 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:novel_app/src/common/card/custom_card.dart';
 import 'package:novel_app/src/provider/theme/provider_theme.dart';
-import 'package:novel_app/src/utils/button/genre_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,9 +17,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _currentCarouselIndex = 0;
   int _currentPageIndex = 0;
-  GenreUtils _genreUtils = GenreUtils();
-
   void isChangeTheme() {
     setState(() {
       Provider.of<ProviderTheme>(context, listen: false).toggleTheme();
@@ -63,47 +65,119 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              _CarouselImage(),
-              _GenreTextBody(),
-              _ButtonGenreCustom(genreUtils: _genreUtils),
+              SizedBox(
+                height: 200,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CarouselSlider(
+                      items: [1, 2, 3, 4, 5].map((i) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Image novel app $i',
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }).toList(),
+                      options: CarouselOptions(
+                        initialPage: 0,
+                        height: 150,
+                        reverse: true,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 4),
+                        autoPlayAnimationDuration:
+                            const Duration(milliseconds: 1000),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (index, reason) {
+                          setState(
+                            () {
+                              _currentCarouselIndex = index;
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    AnimatedSmoothIndicator(
+                      activeIndex: _currentCarouselIndex,
+                      count: 5,
+                      effect: ScrollingDotsEffect(
+                        activeDotColor: Theme.of(context).colorScheme.surface,
+                      ),
+                    )
+                  ],
+                ),
+              ),
               _OnGoingCardCustom(),
               _PopularCardCustom(),
             ],
           ),
         ),
         floatingActionButton: _FloatingActionButtonCustom(),
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          unselectedItemColor: Theme.of(context).colorScheme.onSurface,
-          selectedItemColor: Theme.of(context).colorScheme.onSurface,
-          items: const [
-            BottomNavigationBarItem(
-              label: "Home",
-              icon: Icon(Icons.home),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30),
+              topLeft: Radius.circular(30),
             ),
-            BottomNavigationBarItem(
-              label: "Person",
-              icon: Icon(Icons.person),
+            boxShadow: [
+              BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(25.0),
+              topRight: Radius.circular(25.0),
             ),
-            BottomNavigationBarItem(
-              label: "Favorite",
-              icon: Icon(Icons.favorite_outlined),
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              unselectedItemColor: Theme.of(context).colorScheme.onSurface,
+              selectedItemColor: Theme.of(context).colorScheme.onSurface,
+              items: const [
+                BottomNavigationBarItem(
+                  label: "Home",
+                  icon: Icon(Icons.home),
+                ),
+                BottomNavigationBarItem(
+                  label: "Person",
+                  icon: Icon(Icons.person),
+                ),
+                BottomNavigationBarItem(
+                  label: "Favorite",
+                  icon: Icon(Icons.favorite_outlined),
+                ),
+                BottomNavigationBarItem(
+                  label: "Books",
+                  icon: Icon(Icons.book),
+                ),
+                BottomNavigationBarItem(
+                  label: "Genre",
+                  icon: Icon(Icons.bookmark),
+                ),
+              ],
+              currentIndex: _currentPageIndex,
+              onTap: (value) => setState(
+                () {
+                  Navigator.popAndPushNamed(context, pages[value]);
+                },
+              ),
             ),
-            BottomNavigationBarItem(
-              label: "Books",
-              icon: Icon(Icons.book),
-            ),
-            BottomNavigationBarItem(
-              label: "Genre",
-              icon: Icon(Icons.bookmark),
-            ),
-          ],
-          currentIndex: _currentPageIndex,
-          onTap: (value) => setState(
-            () {
-              Navigator.popAndPushNamed(context, pages[value]);
-            },
           ),
         ),
       ),
@@ -131,7 +205,7 @@ class _PopularCardCustom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 270,
+      height: 300,
       margin: const EdgeInsets.only(left: 8, right: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,7 +244,7 @@ class _OnGoingCardCustom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 270,
+      height: 300,
       margin: const EdgeInsets.only(top: 20, left: 8, right: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,105 +273,6 @@ class _OnGoingCardCustom extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class _ButtonGenreCustom extends StatelessWidget {
-  const _ButtonGenreCustom({
-    required GenreUtils genreUtils,
-  }) : _genreUtils = genreUtils;
-
-  final GenreUtils _genreUtils;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      margin: const EdgeInsets.only(left: 10),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          ..._genreUtils.genreTitle.map(
-            (genre) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    padding: const EdgeInsets.all(3),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            Theme.of(context).colorScheme.surface),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        genre,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _GenreTextBody extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(left: 8),
-      padding: const EdgeInsets.only(top: 30),
-      child: Text(
-        "Genre",
-        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              fontSize: 30,
-            ),
-      ),
-    );
-  }
-}
-
-class _CarouselImage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-      items: [1, 2, 3, 4, 5].map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: const EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Theme.of(context).colorScheme.surface,
-              ),
-              child: Center(
-                child: Text(
-                  'Image novel app $i',
-                  style: const TextStyle(fontSize: 16.0),
-                ),
-              ),
-            );
-          },
-        );
-      }).toList(),
-      options: CarouselOptions(
-        initialPage: 0,
-        height: 150,
-        reverse: true,
-        autoPlay: true,
-        autoPlayInterval: const Duration(seconds: 2),
-        autoPlayAnimationDuration: const Duration(milliseconds: 500),
-        autoPlayCurve: Curves.fastOutSlowIn,
-        scrollDirection: Axis.horizontal,
       ),
     );
   }
